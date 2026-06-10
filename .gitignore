@@ -1,2 +1,16 @@
-node_modules
+# Node modules
+node_modules/
+rag-test/node_modules
+
+
+# Environment variables
 .env
+
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+dist/
+build/
