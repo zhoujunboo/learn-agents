@@ -23,6 +23,9 @@ importers:
       dotenv:
         specifier: ^17.4.2
         version: 17.4.2
+      js-tiktoken:
+        specifier: ^1.0.21
+        version: 1.0.21
 
 packages:
 
