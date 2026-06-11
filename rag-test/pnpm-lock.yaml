@@ -17,6 +17,9 @@ importers:
       '@langchain/openai':
         specifier: ^1.4.7
         version: 1.4.7(@langchain/core@1.1.48(openai@6.42.0(zod@4.4.3)))
+      '@langchain/textsplitters':
+        specifier: ^1.0.1
+        version: 1.0.1(@langchain/core@1.1.48(openai@6.42.0(zod@4.4.3)))
       dotenv:
         specifier: ^17.4.2
         version: 17.4.2
