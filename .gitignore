@@ -14,3 +14,6 @@ Thumbs.db
 # Build outputs
 dist/
 build/
+
+# Docker volumes (generated at runtime)
+milvus/volumes/
