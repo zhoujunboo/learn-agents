@@ -17,6 +17,3 @@ build/
 
 # Docker volumes (generated at runtime)
 milvus/volumes/
-
-# Chat history (generated at runtime)
-**/chat_history.json
