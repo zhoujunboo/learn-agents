@@ -1,0 +1,23 @@
+我们经常需要对大模型输出做一些结构化的限制，这时候就需要 output parser 的 api
+
+它的原理就是在提示词里加入格式信息，然后对结果做一下 parse
+
+比如 JsonOutputParser、StructuredOutputParser、XMLOutputParser 等
+
+当然，用 tool call 的方式也完全可以实现结构化限制，而且可靠性更高，是模型训练的时候就保证的
+
+所以，如果是做结构化，直接用 withStructuredOutput 这个 api 就行，它底层就是根据模型来决定是用 tool call 还是 output parser。
+
+但它有两个不适合的场景：
+
+流式打印，这种需要用 output parser
+
+xml 等非 json 格式，也需要 output parser
+
+此外，如果流式打印 tool 参数的过程中，想实时拿到 tool_calls 的 json 对象来调用 tool，可以用 JsonOutputToolsParser 这个 output parser
+
+综上，如果你需要做大模型的输出做结构化，就可以考虑 withStructuredOutput 和 output parser 这两者二选一了。
+
+
+
+
