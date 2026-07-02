@@ -65,8 +65,14 @@ export class AiService {
   constructor(
     @Inject('CHAT_MODEL') model: ChatOpenAI,
     @Inject('QUERY_USER_TOOL') private readonly queryUserTool: any,
+    @Inject('SEND_MAIL_TOOL') private readonly sendMailTool: any,
+    @Inject('WEB_SEARCH_TOOL') private readonly webSearchTool: any,
   ) {
-    this.modelWithTools = model.bindTools([this.queryUserTool]);
+    this.modelWithTools = model.bindTools([
+      this.queryUserTool,
+      this.sendMailTool,
+      this.webSearchTool,
+    ]);
   }
 
   async runChain(query: string): Promise<string> {
@@ -96,6 +102,25 @@ export class AiService {
         if (toolName === 'query_user') {
           const result = await this.queryUserTool.invoke(toolCall.args);
 
+          messages.push(
+            new ToolMessage({
+              tool_call_id: toolCallId,
+              name: toolName,
+              content: result,
+            }),
+          );
+        } else if (toolName === 'send_mail') {
+          const result = await this.sendMailTool.invoke(toolCall.args);
+
+          messages.push(
+            new ToolMessage({
+              tool_call_id: toolCallId,
+              name: toolName,
+              content: result,
+            }),
+          );
+        } else if (toolName === 'web_search') {
+          const result = await this.webSearchTool.invoke(toolCall.args);
           messages.push(
             new ToolMessage({
               tool_call_id: toolCallId,
@@ -266,6 +291,24 @@ export class AiService {
         if (toolName === 'query_user') {
           const result = await this.queryUserTool.invoke(toolCall.args);
 
+          messages.push(
+            new ToolMessage({
+              tool_call_id: toolCallId,
+              name: toolName,
+              content: result,
+            }),
+          );
+        } else if (toolName === 'send_mail') {
+          const result = await this.sendMailTool.invoke(toolCall.args);
+          messages.push(
+            new ToolMessage({
+              tool_call_id: toolCallId,
+              name: toolName,
+              content: result,
+            }),
+          );
+        } else if (toolName === 'web_search') {
+          const result = await this.webSearchTool.invoke(toolCall.args);
           messages.push(
             new ToolMessage({
               tool_call_id: toolCallId,
