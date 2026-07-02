@@ -7,8 +7,9 @@ import { tool } from '@langchain/core/tools';
 import { UserService } from './user.service';
 import { z } from 'zod';
 import { MailerService } from '@nestjs-modules/mailer';
-
+import { UsersModule } from '../users/users.module';
 @Module({
+  imports: [UsersModule],
   controllers: [AiController],
   providers: [
     AiService,
@@ -208,6 +209,10 @@ import { MailerService } from '@nestjs-modules/mailer';
       },
       inject: [ConfigService],
     },
+    // 加入增删改查用户的 tool
+    // {
+    //   provide: 'DS_USERS_USER_TOOL',
+    // },
   ],
 })
 export class AiModule {}
