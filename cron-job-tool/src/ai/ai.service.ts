@@ -67,11 +67,15 @@ export class AiService {
     @Inject('QUERY_USER_TOOL') private readonly queryUserTool: any,
     @Inject('SEND_MAIL_TOOL') private readonly sendMailTool: any,
     @Inject('WEB_SEARCH_TOOL') private readonly webSearchTool: any,
+    @Inject('DB_USERS_CRUD_TOOL') private readonly dbUsersCrudTool: any,
+    @Inject('CRON_JOB_TOOL') private readonly cronJobTool: any,
   ) {
     this.modelWithTools = model.bindTools([
       this.queryUserTool,
       this.sendMailTool,
       this.webSearchTool,
+      this.dbUsersCrudTool,
+      this.cronJobTool,
     ]);
   }
 
@@ -121,6 +125,26 @@ export class AiService {
           );
         } else if (toolName === 'web_search') {
           const result = await this.webSearchTool.invoke(toolCall.args);
+          messages.push(
+            new ToolMessage({
+              tool_call_id: toolCallId,
+              name: toolName,
+              content: result,
+            }),
+          );
+        } else if (toolName === 'db_users_crud') {
+          const result = await this.dbUsersCrudTool.invoke(toolCall.args);
+
+          messages.push(
+            new ToolMessage({
+              tool_call_id: toolCallId,
+              name: toolName,
+              content: result,
+            }),
+          );
+        } else if (toolName === 'cron_job') {
+          const result = await this.cronJobTool.invoke(toolCall.args);
+
           messages.push(
             new ToolMessage({
               tool_call_id: toolCallId,
@@ -309,6 +333,26 @@ export class AiService {
           );
         } else if (toolName === 'web_search') {
           const result = await this.webSearchTool.invoke(toolCall.args);
+          messages.push(
+            new ToolMessage({
+              tool_call_id: toolCallId,
+              name: toolName,
+              content: result,
+            }),
+          );
+        } else if (toolName === 'db_users_crud') {
+          const result = await this.dbUsersCrudTool.invoke(toolCall.args);
+
+          messages.push(
+            new ToolMessage({
+              tool_call_id: toolCallId,
+              name: toolName,
+              content: result,
+            }),
+          );
+        } else if (toolName === 'cron_job') {
+          const result = await this.cronJobTool.invoke(toolCall.args);
+
           messages.push(
             new ToolMessage({
               tool_call_id: toolCallId,
