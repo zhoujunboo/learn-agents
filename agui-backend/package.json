@@ -23,6 +23,7 @@
     "@ai-sdk/langchain": "^3.0.15",
     "@langchain/core": "^1.2.1",
     "@langchain/openai": "^1.5.3",
+    "@nestjs-modules/mailer": "^2.3.7",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.4",
     "@nestjs/core": "^11.0.1",

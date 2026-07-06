@@ -18,8 +18,56 @@
   margin-top: 0.5rem;
 }
 
-/* Shiki 的 pre 也需保留换行（避免被其它全局样式影响） */
-.chat-streamdown [data-streamdown="code-block"] pre {
-  white-space: pre-wrap;
-  overflow-x: auto;
+/* ── Shiki 代码块样式 ─────────────────────────────────── */
+
+/* 代码块容器 */
+.chat-streamdown [data-streamdown="code-block"] {
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 0.5rem 0;
 }
+
+/* pre 元素 */
+.chat-streamdown [data-streamdown="code-block"] pre {
+  white-space: pre;
+  overflow-x: auto;
+  padding: 1em;
+  margin: 0;
+  border-radius: 8px;
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+  font-size: 13.5px;
+  line-height: 1.55;
+  tab-size: 2;
+}
+
+/* Shiki 渲染的 code 元素 —— 重置全局样式 */
+.chat-streamdown [data-streamdown="code-block"] code {
+  display: block;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border-radius: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  white-space: pre;
+}
+
+/* Shiki 的 span（token） */
+.chat-streamdown [data-streamdown="code-block"] code .line {
+  display: block;
+}
+
+/* ── 行内代码样式 ─────────────────────────────────────── */
+.chat-streamdown__inner :not([data-streamdown="code-block"]) > code,
+.chat-streamdown__inner p > code,
+.chat-streamdown__inner li > code {
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  background: var(--code-bg);
+  color: var(--text-h);
+}
+

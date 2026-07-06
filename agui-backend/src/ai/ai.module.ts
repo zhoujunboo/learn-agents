@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { ChatOpenAI } from '@langchain/openai';
 import { tool } from '@langchain/core/tools';
 import z from 'zod';
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Module({
   controllers: [AiController],
@@ -114,53 +115,53 @@ import z from 'zod';
       },
       inject: [ConfigService],
     },
-    // {
-    //   provide: 'SEND_MAIL_TOOL',
-    //   useFactory: (
-    //     mailerService: MailerService,
-    //     configService: ConfigService,
-    //   ) => {
-    //     const sendMailArgsSchema = z.object({
-    //       to: z.email().describe('收件人邮箱地址，例如：someone@example.com'),
-    //       subject: z.string().describe('邮件主题'),
-    //       text: z.string().optional().describe('纯文本内容，可选'),
-    //       html: z.string().optional().describe('HTML 内容，可选'),
-    //     });
+    {
+      provide: 'SEND_MAIL_TOOL',
+      useFactory: (
+        mailerService: MailerService,
+        configService: ConfigService,
+      ) => {
+        const sendMailArgsSchema = z.object({
+          to: z.email().describe('收件人邮箱地址，例如：someone@example.com'),
+          subject: z.string().describe('邮件主题'),
+          text: z.string().optional().describe('纯文本内容，可选'),
+          html: z.string().optional().describe('HTML 内容，可选'),
+        });
 
-    //     return tool(
-    //       async ({
-    //         to,
-    //         subject,
-    //         text,
-    //         html,
-    //       }: {
-    //         to: string;
-    //         subject: string;
-    //         text?: string;
-    //         html?: string;
-    //       }) => {
-    //         const fallbackFrom = configService.get<string>('MAIL_FROM');
+        return tool(
+          async ({
+            to,
+            subject,
+            text,
+            html,
+          }: {
+            to: string;
+            subject: string;
+            text?: string;
+            html?: string;
+          }) => {
+            const fallbackFrom = configService.get<string>('MAIL_FROM');
 
-    //         await mailerService.sendMail({
-    //           to,
-    //           subject,
-    //           text: text ?? '（无文本内容）',
-    //           html: html ?? `<p>${text ?? '（无 HTML 内容）'}</p>`,
-    //           from: fallbackFrom,
-    //         });
+            await mailerService.sendMail({
+              to,
+              subject,
+              text: text ?? '（无文本内容）',
+              html: html ?? `<p>${text ?? '（无 HTML 内容）'}</p>`,
+              from: fallbackFrom,
+            });
 
-    //         return `邮件已发送到 ${to}，主题为「${subject}」`;
-    //       },
-    //       {
-    //         name: 'send_mail',
-    //         description:
-    //           '发送电子邮件。需要提供收件人邮箱、主题，可选文本内容和 HTML 内容。',
-    //         schema: sendMailArgsSchema,
-    //       },
-    //     );
-    //   },
-    //   inject: [MailerService, ConfigService],
-    // },
+            return `邮件已发送到 ${to}，主题为「${subject}」`;
+          },
+          {
+            name: 'send_mail',
+            description:
+              '发送电子邮件。需要提供收件人邮箱、主题，可选文本内容和 HTML 内容。',
+            schema: sendMailArgsSchema,
+          },
+        );
+      },
+      inject: [MailerService, ConfigService],
+    },
   ],
 })
-export class AiModule {}
+export class AiModule { }
