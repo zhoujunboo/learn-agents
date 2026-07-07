@@ -1,0 +1,22 @@
+{
+  "name": "langgraph-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@langchain/core": "^1.2.1",
+    "@langchain/langgraph": "^1.4.7",
+    "@langchain/langgraph-checkpoint-sqlite": "^1.0.3",
+    "@langchain/langgraph-supervisor": "^1.1.1",
+    "@langchain/openai": "^1.5.3",
+    "dotenv": "^17.4.2",
+    "zod": "^4.4.3"
+  }
+}
