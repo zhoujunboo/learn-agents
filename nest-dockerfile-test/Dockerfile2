@@ -1,0 +1,28 @@
+# 指定基础镜像(必须第一行)
+
+FROM node:24.15-alpine
+
+# 设置容器内工作目录
+
+WORKDIR /app
+
+# 先复制package.json 利用缓存加速
+COPY package*.json ./
+
+# 构建时执行：安装依赖
+RUN npm config set registry https://registry.npmmirror.com/
+RUN npm install
+
+RUN npm install -g @nestjs/cli
+
+# 复制项目内所有代码到容器,会忽略 dockerignore里的文件
+COPY . .
+
+#构建Nest项目 (编译成JS)
+RUN npm run build
+
+#声明暴露端口（仅声明）
+EXPOSE 3000
+
+#容器启动时执行的命令 (启动 Next 服务)
+CMD ['node', 'dist/main.js']
