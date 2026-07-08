@@ -1,0 +1,32 @@
+注意只有
+PUT /life_note
+{
+"mappings": {
+"properties": {
+"title": {
+"type": "text",
+"analyzer": "ik_max_word",
+"search_analyzer": "ik_smart"
+},
+"content": {
+"type": "text",
+"analyzer": "ik_max_word",
+"search_analyzer": "ik_smart"
+},
+"type": {
+"type": "keyword"
+},
+"author": {
+"type": "keyword"
+},
+"record_time": {
+"type": "date"
+}
+}
+}
+}
+
+
+text字段才会建立索引
+这里包含text的
+title content

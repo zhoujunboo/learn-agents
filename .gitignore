@@ -19,3 +19,5 @@ build/
 
 # Docker volumes (generated at runtime)
 milvus/volumes/
+
+es-test/volumes/
