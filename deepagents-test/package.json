@@ -1,0 +1,21 @@
+{
+  "name": "deepagents-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@langchain/langgraph": "^1.4.7",
+    "@langchain/openai": "^1.5.5",
+    "deepagents": "^1.10.7",
+    "dotenv": "^17.4.2",
+    "langchain": "^1.5.3",
+    "zod": "^4.4.3"
+  }
+}
