@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { Annotation, StateGraph, START, END } from "@langchain/langgraph";
 
 // ============================================================
