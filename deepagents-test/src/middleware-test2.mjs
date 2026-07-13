@@ -44,6 +44,7 @@ const extendedToolsMiddleware = createMiddleware({
         ? wrapped.content.slice(0, 120)
         : wrapped,
     );
+    // 同时改变 toolInvocationCount 两个state
     return new Command({
       update: {
         toolInvocationCount: request.state.toolInvocationCount + 1,
