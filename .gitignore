@@ -23,3 +23,4 @@ milvus/volumes/
 es-test/volumes/
 neo4j-graphrag/volumes/
 langsmith-test/volumes/
+pgsql-test/volumes/
