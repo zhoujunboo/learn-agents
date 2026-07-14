@@ -1,0 +1,13 @@
+1. 用户 → 会话（一对多）
+curl -s http://localhost:3005/conversations/users/1
+
+2. 会话 1 消息（一对多）
+curl -s http://localhost:3005/conversations/1/messages
+
+3. 语义检索
+方式一：limit 在 body 中
+curl -s -X POST http://localhost:3005/conversations/1/search -H "Content-Type: application/json" -d "{\"query\":\"向量相似度怎么查\",\"limit\":3}"
+
+
+方式二：limit 在 URL 查询参数中
+curl -s -X POST "http://localhost:3005/conversations/1/search?limit=5" -H "Content-Type: application/json" -d "{\"query\":\"PostgreSQL 支持哪些数据类型\"}"
