@@ -25,3 +25,4 @@ neo4j-graphrag/volumes/
 langsmith-test/volumes/
 pgsql-test/volumes/
 redis-test/volumes
+mem0-test/volumes
