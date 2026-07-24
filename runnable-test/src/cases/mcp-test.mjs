@@ -79,12 +79,23 @@ const toolExecutor = new RunnableLambda({
   },
 });
 
+// Step 1 → L85-87 RunnablePassthrough.assign({ response: llmChain })
+// 这是你拿到 response 的时刻。它的执行逻辑是：
+
+// RunnablePassthrough 先把输入的 state（包含 messages: [HumanMessage("...")], tools, done: false 等）原样透传
+// .assign() 对 state 做扩展：额外计算 response 字段
+// 计算 response 时，会执行 llmChain → 即 prompt.pipe(modelWithTools)
+// prompt 从 state.messages 中读取消息，填充 MessagesPlaceholder
+// 格式化后的 prompt 传给 modelWithTools（带工具的 ChatOpenAI）
+// 这时才真正发出了 API 请求，拿到 LLM 的回复（可能包含 tool_calls）
+// 输出的新 state = { ...原来的state, response: <LLM回复> }
+
 // 2. 对结果的处理
 const agentStepChain = RunnableSequence.from([
   // step1: 将 LLM 输出挂到 state.response 上
   RunnablePassthrough.assign({
     response: llmChain,
-  }), 
+  }),
   // step2: 使用 RunnableBranch 根据是否有 tool_calls 走不同分支
   RunnableBranch.from([
     // 分支1：没有 tool_calls，认为本轮已经完成
@@ -103,7 +114,7 @@ const agentStepChain = RunnableSequence.from([
           };
         },
       }),
-    ], 
+    ],
     // 默认分支：有 tool_calls，调用工具并把 ToolMessage 写回 messages
     RunnableSequence.from([
       new RunnableLambda({
@@ -127,7 +138,7 @@ const agentStepChain = RunnableSequence.from([
             messages: newMessages,
           };
         },
-      }), 
+      }),
       // 调用工具执行器，得到 toolMessages
       RunnablePassthrough.assign({
         toolMessages: toolExecutor,
