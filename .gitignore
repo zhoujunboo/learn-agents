@@ -28,3 +28,4 @@ redis-test/volumes
 mem0-test/
 
 oss-test/volumes
+rabbitmq-test/rabbitmq_data
